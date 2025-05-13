@@ -1,2 +1,12 @@
-# minimax_tic_tac_toe
-Zmodyfikowana gra w kółko i krzyżyk z AI opartym na algorytmie MiniMax i przycinaniu alfa-beta, z opcją podmiany symbolu przeciwnika.
+<<Temat projektu>>
+
+# Cel i zakres projektu
+
+# Opis gry
+_mechanika działania gry, zasady_
+
+# Zastosowane rozwiązania
+_krotki opis algorytmu, zastosowanych heurystyk (alfa-beta, kolejność przeszukiwania rozwiązań, priorytety ruchów itp. jeśli dotyczy), metod wyznaczania nagrody_
+
+# Wnioski
+_spostrzeżenia, uwagi, pomysły na udoskonalenie_

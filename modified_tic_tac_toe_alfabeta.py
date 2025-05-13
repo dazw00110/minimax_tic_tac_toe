@@ -35,10 +35,6 @@ def apply_move(tab, move, player, swaps):
         new_swaps[player] -= 1
     return new_tab, new_swaps
 
-# Heurystyka: blocking + center + two-in-row
-def evaluate(board):
-    return check_blocking(board) + check_center(board) + check_two_in_row(board)
-
 # Sprawdzenie, czy gra zakończona: wygrana lub remis
 def game_over_score(board):
     for i in range(3):
@@ -49,7 +45,10 @@ def game_over_score(board):
         return 0
     return None
 
-# Sprawdzenie blokowania
+# Heurystyka: blocking + center + two-in-row
+def evaluate(board):
+    return check_blocking(board) + check_center(board) + check_two_in_row(board)
+
 def check_blocking(board):
     s = 0
     # blokowanie O przez X
@@ -70,13 +69,11 @@ def check_blocking(board):
     if diag2.count('X') == 2 and diag2.count(' ') == 1: s -= 50
     return s
 
-# Sprawdzenie środka planszy
 def check_center(board):
     if board[1][1] == 'X': return 1
     if board[1][1] == 'O': return -1
     return 0
 
-# Sprawdzenie dwóch w rzędzie
 def check_two_in_row(board):
     s = 0
     for sym, val in [('X', 10), ('O', -10)]:

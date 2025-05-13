@@ -1,7 +1,6 @@
 import copy
 import time
 
-# Sprawdzenie wygranej (3 w rzędzie)
 def check_win(tab, i, j, player):
     if all(tab[i][x] == player for x in range(3)): return True
     if all(tab[x][j] == player for x in range(3)): return True
@@ -10,7 +9,6 @@ def check_win(tab, i, j, player):
         if tab[0][2] == player and tab[2][0] == player: return True
     return False
 
-# Dostępne ruchy: postaw lub podmień (swap)
 def get_moves(tab, player, swaps):
     moves = []
     opp = 'O' if player=='X' else 'X'
@@ -25,7 +23,6 @@ def get_moves(tab, player, swaps):
                     moves.append((i, j, 'swap'))
     return moves
 
-# Zastosowanie ruchu
 def apply_move(tab, move, player, swaps):
     i, j, typ = move
     new_tab = copy.deepcopy(tab)
@@ -35,57 +32,14 @@ def apply_move(tab, move, player, swaps):
         new_swaps[player] -= 1
     return new_tab, new_swaps
 
-# Sprawdzenie, czy gra zakończona: wygrana lub remis
-def game_over_score(board):
-    for i in range(3):
-        for j in range(3):
-            if board[i][j] != ' ' and check_win(board, i, j, board[i][j]):
-                return 1000 if board[i][j] == 'X' else -1000
-    if all(board[i][j] != ' ' for i in range(3) for j in range(3)):
-        return 0
-    return None
-
-# Heurystyka: blocking + center + two-in-row
-def evaluate(board):
-    return check_blocking(board) + check_center(board) + check_two_in_row(board)
-
-def check_blocking(board):
-    s = 0
-    # blokowanie O przez X
-    for i in range(3):
-        if board[i].count('O') == 2 and board[i].count(' ') == 1: s += 50
-        col = [board[0][i], board[1][i], board[2][i]]
-        if col.count('O') == 2 and col.count(' ') == 1: s += 50
-    diag1 = [board[0][0], board[1][1], board[2][2]]
-    diag2 = [board[0][2], board[1][1], board[2][0]]
-    if diag1.count('O') == 2 and diag1.count(' ') == 1: s += 50
-    if diag2.count('O') == 2 and diag2.count(' ') == 1: s += 50
-    # blokowanie X przez O
-    for i in range(3):
-        if board[i].count('X') == 2 and board[i].count(' ') == 1: s -= 50
-        col = [board[0][i], board[1][i], board[2][i]]
-        if col.count('X') == 2 and col.count(' ') == 1: s -= 50
-    if diag1.count('X') == 2 and diag1.count(' ') == 1: s -= 50
-    if diag2.count('X') == 2 and diag2.count(' ') == 1: s -= 50
-    return s
-
-def check_center(board):
-    if board[1][1] == 'X': return 1
-    if board[1][1] == 'O': return -1
+def evaluate(tab):
+    for p, val in [('X', 1), ('O', -1)]:
+        for i in range(3):
+            for j in range(3):
+                if tab[i][j] == p and check_win(tab, i, j, p):
+                    return val
     return 0
 
-def check_two_in_row(board):
-    s = 0
-    for sym, val in [('X', 10), ('O', -10)]:
-        for i in range(3):
-            if board[i].count(sym) == 2 and board[i].count(' ') == 1: s += val
-            col = [board[0][i], board[1][i], board[2][i]]
-            if col.count(sym) == 2 and col.count(' ') == 1: s += val
-        diag1 = [board[0][0], board[1][1], board[2][2]]
-        diag2 = [board[0][2], board[1][1], board[2][0]]
-        if diag1.count(sym) == 2 and diag1.count(' ') == 1: s += val
-        if diag2.count(sym) == 2 and diag2.count(' ') == 1: s += val
-    return s
 def minimax(tab, player, swaps):
     score = evaluate(tab)
     if score != 0 or all(tab[i][j] != ' ' for i in range(3) for j in range(3)):

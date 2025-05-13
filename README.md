@@ -49,8 +49,8 @@ Przykładowe działanie algorytmu MiniMax oraz przycianania alfa-beta na prostym
 
 ![img.png](img.png)
 
-Patrzymy od dołu:
-   1. Min wykonuje ruch i bierz ę najmniejszą możliwą wartość pod nim, czyli:
+Analize algorytmu zaczynamy od dołu;
+   1. Min wykonuje ruch i bierz \ę najmniejszą możliwą wartość pod nim, czyli:
       - dla lewej gałęzi weźmie minimum z 3 i 5, dlatego wybierze 3 
       - dla prawej gałęzi weźmie minimum dla 2 i 9 dlatego wybierze 2
    2. Następny ruch należy do Maxa. Max wie, że Min zawsze weźmie minimum, dlatego chcę pójść w tą stronę, po której Min weźmie większą wartość (większa wartość to lepszy wynik dla Max):
@@ -205,7 +205,7 @@ Funkcja `evaluate` ocenia planszę na podstawie heurystyki:
   - Zajmowanie środka planszy - 1 punkt.
   - Tworzenie dwóch pionków w rzędzie - 10 punktów.
 
-Funkcja `gamover_score` ocenia końcowy wynik gry, gra może zakończyć się na 2 sposoby:
+Dodatkowo funkcja `gamover_score` ocenia końcowy wynik gry, gra może zakończyć się na 2 sposoby:
   - Ustawienie trzech pionków w rzędzie (wygrana) - 1000 punktów.
   - Remis (brak dostępnych ruchów) - 0 punktów.
 # Instrukcja uruchomienia
